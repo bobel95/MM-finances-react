@@ -6,8 +6,6 @@ import {Link as RouterLink} from "react-router-dom";
 const HomePage = (props) => {
 
     const mainContainerStyle = {
-        // display: "flex",
-        // flexDirection: "column",
         backgroundImage: `url(${process.env.PUBLIC_URL}background.jpg)`,
         backgroundSize: "cover",
         height: '100vh',
@@ -16,11 +14,8 @@ const HomePage = (props) => {
     };
 
     const contentContainerStyle = {
-        // marginTop: "120px",
         padding: "2rem",
         width: "80%"
-        // padding: "10rem",
-
     };
 
     const Title = styled(Typography) ({
@@ -42,7 +37,7 @@ const HomePage = (props) => {
         backgroundColor: "#FFFFFFAA",
         backgroundImage: `url(${process.env.PUBLIC_URL}graph.png)`,
         backgroundSize: "contain",
-        backgroundPositionY: "70%",
+        backgroundPositionY: "100%",
         backgroundRepeat: "no-repeat",
         height: "30rem"
     });
