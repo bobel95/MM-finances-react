@@ -42,8 +42,9 @@ const Header = () => {
     const MyButton = styled(Button) ({
         fontFamily: "Roboto, sans-serif",
         fontWeight: 500,
-        size: "18px",
-        margin: "1.25rem",
+        fontSize: "1rem",
+        // size: "18px",
+        margin: "1.25em",
         color: "#EEEEEE",
         textDecoration: "none",
         "&:hover": {
@@ -53,15 +54,13 @@ const Header = () => {
 
     const MyAppBar = styled(AppBar) ({
         backgroundColor: "#00bd0699",
-        height: "80px",
-        // width: "80%",
-        // left: "50%",
-        // transform: "translateX(-50%)"
+        height: "60px",
     });
 
     const Logo = styled(Typography) ({
         fontFamily: "Work Sans, sans-serif",
         fontWeight: 600,
+        fontSize: "30px",
         color: "#FFFEFE",
         textAlign: "left",
     })
@@ -76,7 +75,7 @@ const Header = () => {
         <header>
             <MyAppBar>
                 <MyToolbar>
-                    <Logo variant="h6" component="h1">
+                    <Logo variant="h4">
                          MM Finances
                     </Logo>
                     <div>

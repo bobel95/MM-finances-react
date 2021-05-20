@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from "./Header";
-import {Container, Typography, styled, Paper, BottomNavigation, Button} from "@material-ui/core";
+import {Container, Typography, styled, Paper, Button} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import Footer from "./Footer";
 
 const HomePage = (props) => {
 
@@ -42,16 +43,7 @@ const HomePage = (props) => {
         height: "30rem"
     });
 
-    const Footer = styled(BottomNavigation) ({
-        position: "fixed",
-        bottom: "0",
-        left: "0",
-        height: "30px",
-        color: "white",
-        padding: "1rem",
-        backgroundColor: "#CCCCCC99",
-        width: "100%"
-    });
+
 
     const MyButton = styled(Button) ({
         fontFamily: "Roboto, sans-serif",
@@ -112,9 +104,8 @@ const HomePage = (props) => {
                     </div>
                 </Content>
             </Container>
-            <Footer>
-                <Typography>MM Finances &#169; 2021</Typography>
-            </Footer>
+            <Footer/>
+
         </div>
     );
 }

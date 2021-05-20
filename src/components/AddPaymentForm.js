@@ -56,8 +56,6 @@ export default function AddPaymentForm() {
     const [amount, setAmount] = React.useState('');
 
     const handleSubmit = () => {
-        console.log(amount + category);
-        console.log(getDateString());
 
         const dateString = getDateString();
 
@@ -76,6 +74,7 @@ export default function AddPaymentForm() {
             })
     }
 
+
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
     };
@@ -89,10 +88,9 @@ export default function AddPaymentForm() {
 
         return [
             date.getFullYear(),
-            padWith0(date.getMonth()),
-            padWith0(date.getDay())
+            padWith0(date.getMonth() + 1),
+            padWith0(date.getDate())
         ].join("-");
-
     }
 
     const padWith0 = (date) => {

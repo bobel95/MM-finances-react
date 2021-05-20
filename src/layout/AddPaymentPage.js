@@ -4,10 +4,10 @@ import AddPaymentForm from "../components/AddPaymentForm";
 
 const AddPaymentPage = () => {
     return (
-        <React.Fragment>
+        <div>
             <Header/>
             <AddPaymentForm/>
-        </React.Fragment>
+        </div>
     );
 };
 
