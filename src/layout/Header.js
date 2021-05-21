@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, styled } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button, styled, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 
@@ -76,7 +76,16 @@ const Header = () => {
             <MyAppBar>
                 <MyToolbar>
                     <Logo variant="h4">
-                         MM Finances
+                        <Link
+                            to="/"
+                            component={RouterLink}
+                            style={{
+                                color: "inherit",
+                                textDecoration: "none",
+
+                            }}>
+                            MM Finances
+                        </Link>
                     </Logo>
                     <div>
                         {getMenuButtons()}

@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import LoginPage from "./layout/LoginPage";
 import AddPaymentPage from "./layout/AddPaymentPage";
 import DataPage from "./layout/DataPage";
+import RegisterPage from "./layout/RegisterPage";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
           <Route path="/login" component={LoginPage}/>
           <Route path="/add" component={AddPaymentPage}/>
           <Route path="/data" component={DataPage}/>
+          <Route path="/register" component={RegisterPage}/>
       </Router>
   );
 }

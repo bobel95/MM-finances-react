@@ -13,21 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
+import Copyright from './Copyright';
 import axios from "axios";
 
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                MM Finances
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,6 +35,18 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    message: {
+        fontWeight: "200",
+        textAlign: "center",
+        backgroundColor: "#b7fab3",
+        padding: ".25rem",
+        margin: ".5rem",
+        border: "1px solid",
+        borderColor: "#18b300",
+        borderRadius: ".5rem",
+        width: "80%",
+        color: "green",
+    }
 }));
 
 export default function AddPaymentForm() {
@@ -54,11 +54,11 @@ export default function AddPaymentForm() {
 
     const [category, setCategory] = React.useState('');
     const [amount, setAmount] = React.useState('');
+    const [message, setMessage] = React.useState('');
 
     const handleSubmit = () => {
 
         const dateString = getDateString();
-
         axios
             .post("http://localhost:8080/api/payment/1",
                 {
@@ -70,7 +70,8 @@ export default function AddPaymentForm() {
                     }
                 })
             .then(res => {
-                console.log(res.data);
+                console.log(res);
+                setMessage("Payment added");
             })
     }
 
@@ -100,6 +101,12 @@ export default function AddPaymentForm() {
         return date;
     }
 
+    const messageContainer = message ?
+        (<div className={classes.message}>
+            <Typography variant="subtitle1">{message}</Typography>
+        </div>)
+        : "";
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -109,8 +116,9 @@ export default function AddPaymentForm() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Add new payment
+                    Add new spending
                 </Typography>
+                {messageContainer}
                 <form className={classes.form} noValidate>
                     <TextField
                         variant="outlined"

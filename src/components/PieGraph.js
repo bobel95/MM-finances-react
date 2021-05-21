@@ -38,7 +38,6 @@ const PieGraph = (props) => {
 
     const Title = styled(Typography) ({
         borderBottom: "5px solid #00bd06",
-        // margin: "3rem 1rem 3rem 1rem",
     })
 
     return (
