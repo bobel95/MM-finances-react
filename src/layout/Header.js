@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
 
-    const headersData = [
+    const headersDataLoggedIn = [
         {
             label: "Add Payment",
             href: "/add",
@@ -24,7 +24,18 @@ const Header = () => {
         },
     ];
 
+    const headersDataNotLogged = [
+        {
+            label: "Log in",
+            href: "/login",
+        },
+    ];
+
     const getMenuButtons = () => {
+        const headersData = window.localStorage.getItem("isLogged")
+            ? headersDataLoggedIn
+            : headersDataNotLogged;
+
         return headersData.map(( {label, href} ) => {
             return (
                 <MyButton

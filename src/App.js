@@ -1,10 +1,31 @@
 import './App.css';
 import HomePage from "./layout/HomePage";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import LoginPage from "./layout/LoginPage";
 import AddPaymentPage from "./layout/AddPaymentPage";
 import DataPage from "./layout/DataPage";
 import RegisterPage from "./layout/RegisterPage";
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+        {...rest}
+        render={(props) =>
+            window.localStorage.getItem("isLogged") ? (
+                <Component {...props} />
+            ) : (
+                <Redirect
+                    // Redirect the user to login page
+                    // Pass the last route accessed in the state
+                    // to redirect to it after the user logs in
+                    to={{
+                        pathname: "/login",
+                        state: { from: props.location },
+                    }}
+                />
+            )
+        }
+    />
+);
 
 function App() {
 
@@ -12,8 +33,8 @@ function App() {
       <Router>
           <Route exact path="/" component={HomePage}/>
           <Route path="/login" component={LoginPage}/>
-          <Route path="/add" component={AddPaymentPage}/>
-          <Route path="/data" component={DataPage}/>
+          <PrivateRoute path="/add" component={AddPaymentPage}/>
+          <PrivateRoute path="/data" component={DataPage}/>
           <Route path="/register" component={RegisterPage}/>
       </Router>
   );

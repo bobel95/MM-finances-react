@@ -13,6 +13,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from './Copyright';
 
+import useSignInForm from "./useSignInForm";
+import { useLocation } from 'react-router-dom'
+
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,8 +38,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn() {
+const SignIn = (props) => {
     const classes = useStyles();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/"} };
+    // const from = { from: { pathname: "/"} };
+
+    const { values, handleChange, handleSubmit, errors } = useSignInForm(from);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -44,10 +53,11 @@ export default function SignIn() {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
+                {errors.message && <p>{errors.message}</p>}
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -57,6 +67,8 @@ export default function SignIn() {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
+                        value={values.email}
+                        onChange={handleChange}
                         autoFocus
                     />
                     <TextField
@@ -69,6 +81,8 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={values.password}
+                        onChange={handleChange}
                     />
                     <Button
                         type="submit"
@@ -94,3 +108,5 @@ export default function SignIn() {
         </Container>
     );
 }
+
+export default SignIn;
