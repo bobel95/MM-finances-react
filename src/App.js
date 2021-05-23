@@ -4,6 +4,8 @@ import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import LoginPage from "./layout/LoginPage";
 import AddPaymentPage from "./layout/AddPaymentPage";
 import DataPage from "./layout/DataPage";
+import Logout from "./components/Logout";
+
 import RegisterPage from "./layout/RegisterPage";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -35,6 +37,7 @@ function App() {
           <Route path="/login" component={LoginPage}/>
           <PrivateRoute path="/add" component={AddPaymentPage}/>
           <PrivateRoute path="/data" component={DataPage}/>
+          <Route path="/logout" component={Logout}/>
           <Route path="/register" component={RegisterPage}/>
       </Router>
   );
