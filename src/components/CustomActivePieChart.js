@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
+import Typography from "@material-ui/core/Typography";
 
 
 const createData = (category, amount) => {
@@ -54,7 +55,7 @@ const renderActiveShape = (props) => {
 
     return (
         <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill="#000">
+            <text x={cx} y={cy} dy={8} textAnchor="middle" fill="#000" style={{fontFamily: "Roboto, sans-serif"}}>
                 {payload.name}
             </text>
             <Sector
@@ -91,8 +92,6 @@ const CustomActivePieChart = (props) => {
 
     let data = payments.map((p) => createData(p.paymentCategory, p.money.amount));
     data = formatData(data);
-    console.log(data);
-
     const [activeIndex, setActiveIndex] = useState(0);
 
     const onPieEnter = (_, index) => {
@@ -102,7 +101,7 @@ const CustomActivePieChart = (props) => {
 
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" style={{border: "3px solid black"}}>
             <PieChart width={500} height={500}>
                 <Pie
                     activeIndex={activeIndex}
@@ -110,9 +109,8 @@ const CustomActivePieChart = (props) => {
                     data={data}
                     cx="50%"
                     cy="50%"
-                    innerRadius={110}
-                    outerRadius={140}
-                    fill="#00bd06"
+                    innerRadius={100}
+                    outerRadius={150}
                     dataKey="value"
                     onMouseEnter={onPieEnter}
                 >
@@ -122,7 +120,6 @@ const CustomActivePieChart = (props) => {
                         ))
                     }
                 </Pie>
-
             </PieChart>
         </ResponsiveContainer>
     );

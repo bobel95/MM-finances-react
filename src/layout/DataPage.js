@@ -22,9 +22,6 @@ const DataPage = () => {
     const [content, setContent] = useState(<PaymentsTable payments={payments}/>);
     const classes = useStyles();
 
-
-
-
     useEffect(() => {
         axios
             .get("http://localhost:8080/api/user/1")
@@ -59,7 +56,7 @@ const DataPage = () => {
 
             <div style={{marginTop: "120px", textAlign: "center", height: "500px"}}>
 
-                <Typography variant="h4" gutterBottom>Your payments</Typography>
+                <Typography variant="h4" gutterBottom>Your spendings</Typography>
                 <FormControl
                     className={classes.formControl}
 
@@ -72,7 +69,7 @@ const DataPage = () => {
                         value={dataType}
                         required
                     >
-                        <MenuItem value={"table"}>All payments</MenuItem>
+                        <MenuItem value={"table"}>All spendings</MenuItem>
                         <MenuItem value={"pie"}>By Category</MenuItem>
                     </Select>
                 </FormControl>
