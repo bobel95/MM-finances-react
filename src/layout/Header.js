@@ -7,7 +7,7 @@ const Header = () => {
 
     const headersDataLoggedIn = [
         {
-            label: "Add Payment",
+            label: "Add Spending",
             href: "/add",
         },
         {

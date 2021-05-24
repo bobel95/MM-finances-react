@@ -1,12 +1,6 @@
-import React, {PureComponent, useState} from 'react';
-import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
+import React, { useState } from 'react';
+import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 
-const data = [
-    { name: 'Non Alcoholic Drinks', value: 400 },
-    { name: 'Food', value: 300 },
-    { name: 'Clothes', value: 300 },
-    { name: 'Pets', value: 200 },
-];
 
 const createData = (category, amount) => {
     category = formatEnumString(category);
@@ -28,9 +22,21 @@ const formatEnumString = str => {
 }
 
 const groupByCategory = (data) => {
+
+
     return Array.from(data.reduce(
         (m, {name, value}) => m.set(name, (m.get(name) || 0 ) + value), new Map),
         ([name, value]) => ({name, value}));
+}
+
+const formatData = (data) => {
+    data = groupByCategory(data);
+    const COLORS = ['#DF602A', '#B85194', '#00F5B4', '#9DA9E7', '#975E5F', '#790DAB', '#FFEC51', '#230C0F', '#C7B494', '#4D4B81', '#718C98'];
+    data.forEach((entry, i) => {
+        entry.color = COLORS[i];
+    });
+
+    return data;
 }
 
 const renderActiveShape = (props) => {
@@ -48,7 +54,7 @@ const renderActiveShape = (props) => {
 
     return (
         <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+            <text x={cx} y={cy} dy={8} textAnchor="middle" fill="#000">
                 {payload.name}
             </text>
             <Sector
@@ -58,7 +64,7 @@ const renderActiveShape = (props) => {
                 outerRadius={outerRadius}
                 startAngle={startAngle}
                 endAngle={endAngle}
-                fill={fill}
+                fill={payload.payload.color}
             />
             <Sector
                 cx={cx}
@@ -67,10 +73,10 @@ const renderActiveShape = (props) => {
                 endAngle={endAngle}
                 innerRadius={outerRadius + 6}
                 outerRadius={outerRadius + 10}
-                fill={fill}
+                fill={payload.payload.color}
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-            <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+            <circle cx={ex} cy={ey} r={2} fill={payload.payload.color} stroke="none" />
             <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value} RON`}</text>
             <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
                 {`(Rate ${(percent * 100).toFixed(2)}%)`}
@@ -82,14 +88,18 @@ const renderActiveShape = (props) => {
 const CustomActivePieChart = (props) => {
 
     const payments = props.payments;
-    let data = payments.map(p => createData(p.paymentCategory, p.money.amount));
-    data = groupByCategory(data);
+
+    let data = payments.map((p) => createData(p.paymentCategory, p.money.amount));
+    data = formatData(data);
+    console.log(data);
 
     const [activeIndex, setActiveIndex] = useState(0);
 
     const onPieEnter = (_, index) => {
         setActiveIndex(index);
     };
+
+
 
     return (
         <ResponsiveContainer width="100%" height="100%">
@@ -105,7 +115,14 @@ const CustomActivePieChart = (props) => {
                     fill="#00bd06"
                     dataKey="value"
                     onMouseEnter={onPieEnter}
-                />
+                >
+                    {
+                        data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color}/>
+                        ))
+                    }
+                </Pie>
+
             </PieChart>
         </ResponsiveContainer>
     );
