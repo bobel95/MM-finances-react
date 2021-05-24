@@ -1,13 +1,12 @@
 import React from 'react';
 import Header from "./Header";
-import {Container, Typography, styled, Paper, BottomNavigation, Button} from "@material-ui/core";
+import {Container, Typography, styled, Paper, Button} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import Footer from "./Footer";
 
 const HomePage = (props) => {
 
     const mainContainerStyle = {
-        // display: "flex",
-        // flexDirection: "column",
         backgroundImage: `url(${process.env.PUBLIC_URL}background.jpg)`,
         backgroundSize: "cover",
         height: '100vh',
@@ -16,11 +15,8 @@ const HomePage = (props) => {
     };
 
     const contentContainerStyle = {
-        // marginTop: "120px",
         padding: "2rem",
         width: "80%"
-        // padding: "10rem",
-
     };
 
     const Title = styled(Typography) ({
@@ -42,21 +38,12 @@ const HomePage = (props) => {
         backgroundColor: "#FFFFFFAA",
         backgroundImage: `url(${process.env.PUBLIC_URL}graph.png)`,
         backgroundSize: "contain",
-        backgroundPositionY: "70%",
+        backgroundPositionY: "100%",
         backgroundRepeat: "no-repeat",
         height: "30rem"
     });
 
-    const Footer = styled(BottomNavigation) ({
-        position: "fixed",
-        bottom: "0",
-        left: "0",
-        height: "30px",
-        color: "white",
-        padding: "1rem",
-        backgroundColor: "#CCCCCC99",
-        width: "100%"
-    });
+
 
     const MyButton = styled(Button) ({
         fontFamily: "Roboto, sans-serif",
@@ -117,9 +104,8 @@ const HomePage = (props) => {
                     </div>
                 </Content>
             </Container>
-            <Footer>
-                <Typography>MM Finances &#169; 2021</Typography>
-            </Footer>
+            <Footer/>
+
         </div>
     );
 }
