@@ -53,7 +53,6 @@ const SignIn = (props) => {
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                {errors.message && <p>{errors.message}</p>}
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
@@ -84,6 +83,15 @@ const SignIn = (props) => {
                         value={values.password}
                         onChange={handleChange}
                     />
+
+                    {errors.message && <p style={{
+                        textAlign: "center",
+                        border: "1px solid #700",
+                        borderRadius: ".25rem",
+                        backgroundColor: "#fdc4c4",
+                        color: "#700",
+                        padding: "1rem"}}>{errors.message}</p>}
+
                     <Button
                         type="submit"
                         fullWidth

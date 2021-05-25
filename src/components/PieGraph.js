@@ -28,7 +28,6 @@ const PieGraph = (props) => {
     const getTimeFilter = () => {
         switch(timePeriod) {
             case "year":
-                console.log("case year")
                 return (date) => {
                     let paymentDate = new Date(date);
                     let lastYear = new Date();

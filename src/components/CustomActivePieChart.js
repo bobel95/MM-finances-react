@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 import Typography from "@material-ui/core/Typography";
+import {formatEnumString} from '../util/stringUtils';
 
 
 const createData = (category, amount) => {
@@ -8,22 +9,21 @@ const createData = (category, amount) => {
     return {name: category, value: amount};
 }
 
-const formatEnumString = str => {
-    str = str.toLowerCase();
-    let res = "";
-    for (let i = 0; i < str.length; i++) {
-        if (str.charAt(i) === "_") {
-            res += " ";
-        } else {
-            res += str.charAt(i);
-        }
-    }
-
-    return res.charAt(0).toUpperCase() + res.slice(1);
-}
+// const formatEnumString = str => {
+//     str = str.toLowerCase();
+//     let res = "";
+//     for (let i = 0; i < str.length; i++) {
+//         if (str.charAt(i) === "_") {
+//             res += " ";
+//         } else {
+//             res += str.charAt(i);
+//         }
+//     }
+//
+//     return res.charAt(0).toUpperCase() + res.slice(1);
+// }
 
 const groupByCategory = (data) => {
-
 
     return Array.from(data.reduce(
         (m, {name, value}) => m.set(name, (m.get(name) || 0 ) + value), new Map),
