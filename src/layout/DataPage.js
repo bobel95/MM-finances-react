@@ -10,6 +10,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from './Footer';
+import LineChart from "../components/LineChart";
+import ComparisonChart from "../components/ComparisonChart";
 
 
 const DataPage = () => {
@@ -24,7 +26,7 @@ const DataPage = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:8080/api/user/1")
+            .get(`http://localhost:8080/api/user/${window.localStorage.getItem("userId")}`)
             .then(res => {
                 setPayments(res.data.paymentList);
             });
@@ -41,6 +43,9 @@ const DataPage = () => {
                 break;
             case "table":
                 setContent(<PaymentsTable payments={payments}/>);
+                break;
+            case "line":
+                setContent(<ComparisonChart payments={payments}/>);
                 break;
             default:
                 setContent(<PaymentsTable payments={payments}/>);
@@ -69,8 +74,10 @@ const DataPage = () => {
                         value={dataType}
                         required
                     >
-                        <MenuItem value={"table"}>All spendings</MenuItem>
+                        <MenuItem value={"table"}>All expenses</MenuItem>
                         <MenuItem value={"pie"}>By Category</MenuItem>
+                        <MenuItem value={"line"}>Compare expenses</MenuItem>
+
                     </Select>
                 </FormControl>
                 {content}

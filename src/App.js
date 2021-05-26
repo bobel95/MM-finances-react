@@ -5,8 +5,8 @@ import LoginPage from "./layout/LoginPage";
 import AddPaymentPage from "./layout/AddPaymentPage";
 import DataPage from "./layout/DataPage";
 import Logout from "./components/Logout";
-
 import RegisterPage from "./layout/RegisterPage";
+import AboutPage from "./layout/AboutPage";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -39,6 +39,7 @@ function App() {
           <PrivateRoute path="/data" component={DataPage}/>
           <Route path="/logout" component={Logout}/>
           <Route path="/register" component={RegisterPage}/>
+          <Route path="/about" component={AboutPage}/>
       </Router>
   );
 }

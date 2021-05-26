@@ -60,7 +60,7 @@ export default function AddPaymentForm() {
 
         const dateString = getDateString();
         axios
-            .post("http://localhost:8080/api/payment/1",
+            .post(`http://localhost:8080/api/payment/${window.localStorage.getItem("userId")}`,
                 {
                     date: dateString,
                     paymentCategory: category,

@@ -28,7 +28,6 @@ const PieGraph = (props) => {
     const getTimeFilter = () => {
         switch(timePeriod) {
             case "year":
-                console.log("case year")
                 return (date) => {
                     let paymentDate = new Date(date);
                     let lastYear = new Date();
@@ -65,7 +64,7 @@ const PieGraph = (props) => {
         height: "100%",
         borderRadius: "1rem",
         display: "flex",
-        padding: "1rem",
+        padding: "2rem",
         boxShadow: "0px 0px 3px 0px rgba(0,0,0,0.55)",
 
     }
@@ -104,7 +103,10 @@ const PieGraph = (props) => {
                     Category Chart
                 </Title>
                 <Typography variant="h6" style={{fontWeight: "300"}}>
-                    Take control of your spending and budget smarter with our useful analytics - categorised in real time
+                    Hover over a segment of the chart to see more details
+                    <br/>
+                    <br/>
+                    Change the time period to view only the expenses made in that specific time frame
                 </Typography>
                 <div>
 

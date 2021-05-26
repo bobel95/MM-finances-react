@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
-import Typography from "@material-ui/core/Typography";
+import {formatEnumString} from '../util/stringUtils';
 
 
 const createData = (category, amount) => {
@@ -8,22 +8,7 @@ const createData = (category, amount) => {
     return {name: category, value: amount};
 }
 
-const formatEnumString = str => {
-    str = str.toLowerCase();
-    let res = "";
-    for (let i = 0; i < str.length; i++) {
-        if (str.charAt(i) === "_") {
-            res += " ";
-        } else {
-            res += str.charAt(i);
-        }
-    }
-
-    return res.charAt(0).toUpperCase() + res.slice(1);
-}
-
 const groupByCategory = (data) => {
-
 
     return Array.from(data.reduce(
         (m, {name, value}) => m.set(name, (m.get(name) || 0 ) + value), new Map),
@@ -78,7 +63,7 @@ const renderActiveShape = (props) => {
             />
             <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
             <circle cx={ex} cy={ey} r={2} fill={payload.payload.color} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value} RON`}</text>
+            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value.toFixed(2)} RON`}</text>
             <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
                 {`(Rate ${(percent * 100).toFixed(2)}%)`}
             </text>
