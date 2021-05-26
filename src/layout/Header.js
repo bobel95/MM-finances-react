@@ -7,6 +7,10 @@ const Header = () => {
 
     const headersDataLoggedIn = [
         {
+            label: "About",
+            href: "/about",
+        },
+        {
             label: "Add Spending",
             href: "/add",
         },
@@ -25,6 +29,10 @@ const Header = () => {
     ];
 
     const headersDataNotLogged = [
+        {
+            label: "About",
+            href: "/about",
+        },
         {
             label: "Log in",
             href: "/login",

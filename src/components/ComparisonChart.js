@@ -87,14 +87,13 @@ const ComparisonChart = (props) => {
     console.log(payments);
 
     const mainContainerStyle = {
-        width: "60%",
+        width: "70%",
         margin: ".5rem auto",
         height: "100%",
         borderRadius: "1rem",
         display: "flex",
-        padding: "1rem",
+        padding: "2rem",
         boxShadow: "0px 0px 3px 0px rgba(0,0,0,0.55)",
-
     }
 
     const textContainerStyle = {
@@ -119,10 +118,6 @@ const ComparisonChart = (props) => {
         borderBottom: "5px solid #00bd06",
     })
 
-    const TimePeriodSelect = styled(FormControl) ({
-        fontSize: "1.2rem",
-
-    })
     return (
         <div style={mainContainerStyle}>
             <div style = {textContainerStyle}>
@@ -135,16 +130,17 @@ const ComparisonChart = (props) => {
                 <div>
 
                 </div>
-                {/*<Typography variant="h6" style={{fontWeight: "400"}}>*/}
-                    <FormControl
-                    >
+                <div>
+                    <FormControl >
                         <Select
                             labelId="simple-select-label"
                             id="simple-select-2"
+                            variant="outlined"
                             onChange={(e) => {
                                 setOption1(e.target.value);
                             }}
                             value={option1}
+                            style={{minWidth: "150px", color: "#8884d8", fontWeight: "600"}}
                         >
                             {uniqueOptions.map(option => (
                                 <MenuItem value={option}>{formatEnumString(option)}</MenuItem>
@@ -152,9 +148,10 @@ const ComparisonChart = (props) => {
 
                         </Select>
                     </FormControl>
+                </div>
 
-                    <FormControl
-                    >
+                <div>
+                    <FormControl>
                         <Select
                             labelId="simple-select-label"
                             id="simple-select-2"
@@ -162,6 +159,9 @@ const ComparisonChart = (props) => {
                                 setOption2(e.target.value);
                             }}
                             value={option2}
+                            variant="outlined"
+                            style={{minWidth: "150px", color: "#82ca9d", fontWeight: "600"}}
+
                         >
                             {uniqueOptions.map(option => (
                                 <MenuItem value={option}>{formatEnumString(option)}</MenuItem>
@@ -169,8 +169,7 @@ const ComparisonChart = (props) => {
 
                         </Select>
                     </FormControl>
-                {/*</Typography>*/}
-
+                </div>
             </div>
             <div style = {chartContainerStyle}>
                 <LineChart data={data} option1={option1} option2={option2}/>

@@ -2,9 +2,15 @@ import React, {useEffect, useState} from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import {formatEnumString} from "../util/stringUtils";
 
-const tableContainerStyle = {
+
+const mainContainerStyle = {
     width: "50%",
-    margin: "0 auto"
+    margin: "1rem auto",
+    height: "100%",
+    borderRadius: "1rem",
+    display: "flex",
+    padding: "2rem 2rem 0 2rem",
+    boxShadow: "0px 0px 3px 0px rgba(0,0,0,0.55)",
 }
 
 const PaymentsTable = (props) => {
@@ -37,9 +43,9 @@ const PaymentsTable = (props) => {
     useEffect(createRows, [payments]);
 
     return (
-        <div style={tableContainerStyle}>
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid rows={rows} columns={columns} pageSize={5}/>
+        <div style={mainContainerStyle}>
+            <div style={{ height: 400, width: '100%', }}>
+                <DataGrid rows={rows} columns={columns} pageSize={5} />
             </div>
         </div>
     );

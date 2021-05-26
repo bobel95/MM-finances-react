@@ -85,7 +85,7 @@ const SimpleLineChart = (props) => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey={option1} stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey={option1} stroke="#8884d8" />
                     <Line type="monotone" dataKey={option2} stroke="#82ca9d" />
                 </LineChart>
             </ResponsiveContainer>

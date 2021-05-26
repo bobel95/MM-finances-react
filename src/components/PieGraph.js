@@ -64,7 +64,7 @@ const PieGraph = (props) => {
         height: "100%",
         borderRadius: "1rem",
         display: "flex",
-        padding: "1rem",
+        padding: "2rem",
         boxShadow: "0px 0px 3px 0px rgba(0,0,0,0.55)",
 
     }
