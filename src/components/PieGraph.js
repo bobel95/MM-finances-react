@@ -103,7 +103,10 @@ const PieGraph = (props) => {
                     Category Chart
                 </Title>
                 <Typography variant="h6" style={{fontWeight: "300"}}>
-                    Take control of your spending and budget smarter with our useful analytics - categorised in real time
+                    Hover over a segment of the chart to see more details
+                    <br/>
+                    <br/>
+                    Change the time period to view only the expenses made in that specific time frame
                 </Typography>
                 <div>
 

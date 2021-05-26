@@ -14,14 +14,6 @@ import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 
-// {
-//     "email": "string",
-//     "firstName": "string",
-//     "lastName": "string",
-//     "password": "string"
-// }
-
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(14),

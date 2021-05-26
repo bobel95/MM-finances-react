@@ -1,4 +1,10 @@
-const formatEnumString = str => {
+
+/**
+ * Utility function that formats uppercase, underscore separated strings
+ * to title case, space separated strings
+ * @param {string} str
+ */
+const formatEnumString = (str) => {
     str = str.toLowerCase();
     let res = "";
     for (let i = 0; i < str.length; i++) {

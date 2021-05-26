@@ -72,10 +72,10 @@ const ComparisonChart = (props) => {
             };
 
             let currMonthAmount1 = firstOptionData.filter(d => d.month === i);
-            monthData[option1] = (currMonthAmount1.length && currMonthAmount1[0].amount) || 0;
+            monthData[option1] = (currMonthAmount1.length && currMonthAmount1[0].amount.toFixed(2)) || 0;
 
             let currMonthAmount2 = secondOptionData.filter(d => d.month === i);
-            monthData[option2] = (currMonthAmount2.length && currMonthAmount2[0].amount) || 0;
+            monthData[option2] = (currMonthAmount2.length && currMonthAmount2[0].amount.toFixed(2)) || 0;
 
             tempData.push(monthData);
         }
@@ -125,7 +125,7 @@ const ComparisonChart = (props) => {
                     Compare expenses
                 </Title>
                 <Typography variant="h6" style={{fontWeight: "300"}}>
-                    Take control of your spending and budget smarter with our useful analytics - categorised in real time
+                    Choose two categories to compare how much you've spent on each during the last year
                 </Typography>
                 <div>
 
