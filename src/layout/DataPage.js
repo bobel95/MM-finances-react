@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Header from "./Header";
 import PaymentsTable from "../components/PaymentsTable";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import PieGraph from "../components/PieGraph";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -10,8 +9,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from './Footer';
-import LineChart from "../components/LineChart";
 import ComparisonChart from "../components/ComparisonChart";
+import { getUser } from "../api/appUser";
 
 
 const DataPage = () => {
@@ -23,10 +22,10 @@ const DataPage = () => {
     const [dataType, setDataType] = useState("table");
     const [content, setContent] = useState(<PaymentsTable payments={payments}/>);
     const classes = useStyles();
+    const userId = window.localStorage.getItem("userId");
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8080/api/user/${window.localStorage.getItem("userId")}`)
+        getUser(userId)
             .then(res => {
                 setPayments(res.data.paymentList);
             });
