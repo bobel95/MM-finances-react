@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { getUser } from "../api/appUser";
 import {Button, styled, Typography} from "@material-ui/core";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import CountUp from 'react-countup';
+import {AccountCircle} from "@material-ui/icons";
 
 const AccountDetails = () => {
-
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        getUser(window.localStorage.getItem("userId"))
-            .then(res => setUser(res.data));
-    }, []);
-
-    console.log(user);
 
     const containerStyle = {
         display: "flex",
@@ -24,6 +22,7 @@ const AccountDetails = () => {
 
     const dataContainerStyle = {
         backgroundColor: "#f1f1f1",
+        background: "linear-gradient(#ddd, #ddd) no-repeat center/2px 100%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -57,27 +56,96 @@ const AccountDetails = () => {
         textTransform: "none"
     })
 
+    const [user, setUser] = useState({paymentList: []});
+    const [totalSpent, setTotalSpent] = useState(0);
+    const [numOfPayments, setNumOfPayments] = useState(0);
+
+    useEffect(() => {
+        getUser(window.localStorage.getItem("userId"))
+            .then(res => setUser(res.data));
+    }, []);
+
+    console.log(user);
+
+    useEffect(() => {
+        setTotalSpent(user.paymentList
+            .reduce((prev, payment) => prev + payment.money.amount, 0));
+        setNumOfPayments(user.paymentList.length);
+    }, [user])
+
+    const rows = [
+        {}
+    ]
+
+
+    const detailsAreaContent = (
+        <Table aria-label="simple table" style={{height: "100%"}}>
+            <TableBody>
+                <TableRow>
+                    <TableCell component="th" align="center">
+                        First Name
+                    </TableCell>
+                    <TableCell align="center">{user.firstName}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell component="th" align="center">
+                        Last Name
+                    </TableCell>
+                    <TableCell align="center">{user.lastName}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell component="th" align="center">
+                        E-mail
+                    </TableCell>
+                    <TableCell align="center">{user.email}</TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
+    )
 
     return (
         <div style={containerStyle}>
+            <AccountCircle fontSize="large" />
             <Title variant="h4" style={{margin: "1rem"}}>
                 {`${user.firstName} ${user.lastName}`}
             </Title>
             <div style={dataContainerStyle}>
-                <div >
+                <div>
                     <Typography variant="h5">
-                        1230 transactions
+                        <CountUp
+                            start={0}
+                            end={numOfPayments}
+                            duration={3}
+                            suffix=" Transactions"
+                        />
                     </Typography>
                 </div>
                 <div>
                     <Typography variant="h5">
-                        1230 RON spent
+                        <CountUp
+                            start={0}
+                            end={totalSpent}
+                            duration={2}
+                            decimals={2}
+                            prefix="RON "
+                            suffix=" spent"
+                        />
                     </Typography>
                 </div>
             </div>
             <div style={secondaryContainerStyle}>
-                <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems:"center", minWidth: "50%", color: "#f1f1f1"}}>
-                    <CustomButton>
+                <div id="buttons-container" style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems:"center",
+                    // minWidth: "50%",
+                    width: "50%",
+                    color: "#f1f1f1",
+                }}>
+                    <CustomButton onClick={() => {
+                        document.querySelector("#buttons-container").style.width = "30%";
+                    }}>
                         <Typography variant="h6">Add income</Typography>
                     </CustomButton>
                     <CustomButton>
@@ -86,12 +154,12 @@ const AccountDetails = () => {
                     <CustomButton>
                         <Typography variant="h6">Change Email</Typography>
                     </CustomButton>
-                    <CustomButton variant="contained" style={{backgroundColor: "#ff5e5e"}}>
-                        <Typography variant="h6">Delete Account</Typography>
+                    <CustomButton variant="contained" style={{backgroundColor: "#ff5e5e", margin: "1rem"}}>
+                        <Typography variant="subtitle2">Delete Account</Typography>
                     </CustomButton>
                 </div>
-                <div style={{minWidth: "50%"}}>
-
+                <div id="details-container" style={{minWidth: "50%"}}>
+                    {detailsAreaContent}
                 </div>
             </div>
         </div>
