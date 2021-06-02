@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 import Copyright from "./Copyright";
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
-import axios from "axios";
+import { register } from "../api/appUser";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,17 +44,8 @@ const RegisterForm = () => {
     const [password, setPassword] = useState("");
 
     const handleSubmit = () => {
-        axios
-            .post("http://localhost:8080/api/user", {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
-            })
-            .then(res => {
-                console.log(res);
-                history.push("/");
-            });
+        register(firstName, lastName, email, password)
+            .then(history.push("/"));
     }
 
     const handleChange = (e, setter) => {

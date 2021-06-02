@@ -42,7 +42,6 @@ const SignIn = (props) => {
     const classes = useStyles();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/"} };
-    // const from = { from: { pathname: "/"} };
 
     const { values, handleChange, handleSubmit, errors } = useSignInForm(from);
 
