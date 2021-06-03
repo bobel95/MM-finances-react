@@ -8,6 +8,8 @@ import Logout from "./components/Logout";
 import RegisterPage from "./layout/RegisterPage";
 import AboutPage from "./layout/AboutPage";
 import MyAccountPage from "./layout/MyAccountPage";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -29,6 +31,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         }
     />
 );
+
+toast.configure();
 
 function App() {
 

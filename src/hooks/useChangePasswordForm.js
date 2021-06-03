@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {toast} from 'react-toastify';
 import {useHistory} from "react-router-dom";
 import {changePass} from "../api/appUser";
 
@@ -31,11 +32,21 @@ const useChangePasswordForm = () => {
         if (isSubmitting) {
             changePass(values.previousPassword, values.newPassword, window.localStorage.getItem("userId"))
                 .then((res) => {
-                    console.log("se schimba");
-                    // history.push(from.pathname);
+                    toast.success(
+                        "Password Successfully Changed!",
+                        {
+                            position: "bottom-center"
+                        }
+                    )
                 })
                 .catch(() => {
-                    setErrors({ message: "Actual password incorrect" });
+                    toast.error(
+                        "Something went wrong :(",
+                        {
+                            position: "bottom-center"
+                        }
+                    )
+                    // setErrors({ message: "Actual password incorrect" });
                     setIsSubmitting(false);
                 });
         }

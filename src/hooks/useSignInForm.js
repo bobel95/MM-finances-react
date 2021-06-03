@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { signIn } from "../api/appUser";
+import { toast } from 'react-toastify';
+
 
 const useSignInForm = (from) => {
     const history = useHistory();
@@ -35,11 +37,20 @@ const useSignInForm = (from) => {
                     window.localStorage.setItem("userId", res.data.userId);
                     window.localStorage.setItem("token", res.data.jwt);
                     window.localStorage.setItem("isLogged", true);
-
+                    toast.success(
+                        "Successfully Logged In!",
+                        {
+                            position: "bottom-center"
+                        });
                     history.push(from.pathname);
                 })
                 .catch(() => {
                     setErrors({ message: "Invalid email/password" });
+                    toast.error(
+                        "Something went wrong :(",
+                        {
+                            position: "bottom-center"
+                        });
                     setIsSubmitting(false);
                 });
         }
