@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { getUser } from "../api/appUser";
 import {Button, styled, Typography} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import CountUp from 'react-countup';
 import {AccountCircle} from "@material-ui/icons";
+import ChangePasswordForm from "./ChangePasswordForm";
+
+const createRow = (key, val) => {
+    return {key, val};
+}
 
 const AccountDetails = () => {
 
@@ -59,49 +64,47 @@ const AccountDetails = () => {
     const [user, setUser] = useState({paymentList: []});
     const [totalSpent, setTotalSpent] = useState(0);
     const [numOfPayments, setNumOfPayments] = useState(0);
+    const [rows, setRows] = useState([]);
+    const [detailsAreaContent, setDetailsAreaContent] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         getUser(window.localStorage.getItem("userId"))
             .then(res => setUser(res.data));
     }, []);
 
-    console.log(user);
-
     useEffect(() => {
         setTotalSpent(user.paymentList
             .reduce((prev, payment) => prev + payment.money.amount, 0));
+
         setNumOfPayments(user.paymentList.length);
+
+        setRows([
+            createRow("First Name", user.firstName),
+            createRow("Last Name", user.lastName),
+            createRow("E-mail", user.email),
+        ])
     }, [user])
 
-    const rows = [
-        {}
-    ]
+    useEffect(() => {
+        setDetailsAreaContent(
+            <Table aria-label="simple table" style={{height: "100%"}}>
+                <TableBody>
+                    {rows.map(row => (
+                        <TableRow key={row.key}>
+                            <TableCell component="th" align="center">
+                                <Typography variant="subtitle1">{row.key}</Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                                <Typography variant="subtitle1">{row.val}</Typography>
+                            </TableCell>
+                        </TableRow>
+                    ))
+                    }
+                </TableBody>
+            </Table>)
+    }, [rows]);
 
-
-    const detailsAreaContent = (
-        <Table aria-label="simple table" style={{height: "100%"}}>
-            <TableBody>
-                <TableRow>
-                    <TableCell component="th" align="center">
-                        First Name
-                    </TableCell>
-                    <TableCell align="center">{user.firstName}</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell component="th" align="center">
-                        Last Name
-                    </TableCell>
-                    <TableCell align="center">{user.lastName}</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell component="th" align="center">
-                        E-mail
-                    </TableCell>
-                    <TableCell align="center">{user.email}</TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-    )
 
     return (
         <div style={containerStyle}>
@@ -136,24 +139,39 @@ const AccountDetails = () => {
             <div style={secondaryContainerStyle}>
                 <div id="buttons-container" style={{
                     display: "flex",
+                    marginLeft: "1rem",
+                    marginRight: "1rem",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems:"center",
+                    alignItems: "flex-start",
                     // minWidth: "50%",
                     width: "50%",
                     color: "#f1f1f1",
                 }}>
-                    <CustomButton onClick={() => {
-                        document.querySelector("#buttons-container").style.width = "30%";
-                    }}>
-                        <Typography variant="h6">Add income</Typography>
+
+                    <Typography variant="subtitle2" style={
+                        {
+                            margin: "0 0 0 1rem",
+                            alignSelf: "self-start",
+                            color: "#0e4200"
+                        }}>Settings</Typography>
+                    <hr style={{width: "100%", color: "black"}}/>
+                    <CustomButton onClick={() => history.push("/data")}>
+                        <Typography variant="h6">Spending Data</Typography>
                     </CustomButton>
-                    <CustomButton>
+                    <CustomButton
+                        onClick={() =>
+                            setDetailsAreaContent(<ChangePasswordForm/>)}>
                         <Typography variant="h6">Change Password</Typography>
                     </CustomButton>
-                    <CustomButton>
-                        <Typography variant="h6">Change Email</Typography>
-                    </CustomButton>
+
+                    <Typography variant="subtitle2" style={
+                        {
+                            margin: "1rem 0 0 1rem",
+                            alignSelf: "self-start",
+                            color: "#930505"
+                        }}>Danger zone</Typography>
+                    <hr style={{width: "100%", color: "black"}}/>
                     <CustomButton variant="contained" style={{backgroundColor: "#ff5e5e", margin: "1rem"}}>
                         <Typography variant="subtitle2">Delete Account</Typography>
                     </CustomButton>

@@ -15,12 +15,13 @@ import Copyright from './Copyright';
 
 import useSignInForm from "../hooks/useSignInForm";
 import { useLocation } from 'react-router-dom'
+import useChangePasswordForm from "../hooks/useChangePasswordForm";
 
 
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(14),
+        marginTop: theme.spacing(1),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -38,48 +39,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignIn = (props) => {
+const ChangePasswordForm = (props) => {
     const classes = useStyles();
-    const location = useLocation();
-    const { from } = location.state || { from: { pathname: "/"} };
 
-    const { values, handleChange, handleSubmit, errors } = useSignInForm(from);
+    const { values, handleChange, handleSubmit, errors } = useChangePasswordForm();
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
+                <Typography component="h1" variant="h6">
+                    Change Password
                 </Typography>
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <TextField
-                        variant="outlined"
-                        margin="normal"
+                        margin="dense"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        value={values.email}
+                        id="previousPassword"
+                        label="Actual Password"
+                        name="previousPassword"
+                        type="password"
+                        value={values.previousPassword}
                         onChange={handleChange}
                         autoFocus
                     />
                     <TextField
-                        variant="outlined"
-                        margin="normal"
+                        margin="dense"
                         required
                         fullWidth
-                        name="password"
-                        label="Password"
+                        name="newPassword"
+                        label="New Password"
                         type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={values.password}
+                        id="newPassword"
+                        value={values.newPassword}
                         onChange={handleChange}
                     />
 
@@ -96,24 +89,15 @@ const SignIn = (props) => {
                         fullWidth
                         variant="contained"
                         color="primary"
+                        size="small"
                         className={classes.submit}
                     >
-                        Sign In
+                        Submit
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="/register" variant="body2">
-                                Don't have an account? Sign up
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </form>
             </div>
-            <Box mt={8}>
-                <Copyright />
-            </Box>
         </Container>
     );
 }
 
-export default SignIn;
+export default ChangePasswordForm;
