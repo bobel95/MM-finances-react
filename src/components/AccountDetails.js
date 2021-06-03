@@ -61,6 +61,25 @@ const AccountDetails = () => {
         textTransform: "none"
     })
 
+    const renderUserDataTable = () => {
+        setDetailsAreaContent(
+            <Table aria-label="simple table" style={{height: "100%"}}>
+                <TableBody>
+                    {rows.map(row => (
+                        <TableRow key={row.key}>
+                            <TableCell component="th" align="center">
+                                <Typography variant="subtitle1">{row.key}</Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                                <Typography variant="subtitle1">{row.val}</Typography>
+                            </TableCell>
+                        </TableRow>
+                    ))
+                    }
+                </TableBody>
+            </Table>)
+    }
+
     const [user, setUser] = useState({paymentList: []});
     const [totalSpent, setTotalSpent] = useState(0);
     const [numOfPayments, setNumOfPayments] = useState(0);
@@ -86,25 +105,7 @@ const AccountDetails = () => {
         ])
     }, [user])
 
-    useEffect(() => {
-        setDetailsAreaContent(
-            <Table aria-label="simple table" style={{height: "100%"}}>
-                <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.key}>
-                            <TableCell component="th" align="center">
-                                <Typography variant="subtitle1">{row.key}</Typography>
-                            </TableCell>
-                            <TableCell align="center">
-                                <Typography variant="subtitle1">{row.val}</Typography>
-                            </TableCell>
-                        </TableRow>
-                    ))
-                    }
-                </TableBody>
-            </Table>)
-    }, [rows]);
-
+    useEffect(renderUserDataTable, [rows]);
 
     return (
         <div style={containerStyle}>
@@ -156,6 +157,9 @@ const AccountDetails = () => {
                             color: "#0e4200"
                         }}>Settings</Typography>
                     <hr style={{width: "100%", color: "black"}}/>
+                    <CustomButton onClick={() => renderUserDataTable()}>
+                        <Typography variant="h6">User Details</Typography>
+                    </CustomButton>
                     <CustomButton onClick={() => history.push("/data")}>
                         <Typography variant="h6">Spending Data</Typography>
                     </CustomButton>
