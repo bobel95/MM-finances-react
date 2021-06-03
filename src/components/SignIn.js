@@ -68,7 +68,10 @@ const SignIn = (props) => {
                         value={values.email}
                         onChange={handleChange}
                         autoFocus
+                        error={errors.email}
+                        helperText={errors.email}
                     />
+
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -81,15 +84,9 @@ const SignIn = (props) => {
                         autoComplete="current-password"
                         value={values.password}
                         onChange={handleChange}
+                        error={errors.password}
+                        helperText={errors.password}
                     />
-
-                    {errors.message && <p style={{
-                        textAlign: "center",
-                        border: "1px solid #700",
-                        borderRadius: ".25rem",
-                        backgroundColor: "#fdc4c4",
-                        color: "#700",
-                        padding: "1rem"}}>{errors.message}</p>}
 
                     <Button
                         type="submit"

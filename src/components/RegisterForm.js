@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import React from 'react';
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +11,7 @@ import Box from "@material-ui/core/Box";
 import Copyright from "./Copyright";
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
-import { register } from "../api/appUser";
+import useRegisterForm from "../hooks/useRegisterForm";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,22 +34,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterForm = () => {
-    const history = useHistory();
-
     const classes = useStyles();
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const handleSubmit = () => {
-        register(firstName, lastName, email, password)
-            .then(history.push("/"));
-    }
-
-    const handleChange = (e, setter) => {
-        setter(e.target.value);
-    }
+    const { values, handleChange, handleSubmit, errors } = useRegisterForm();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -62,19 +48,22 @@ const RegisterForm = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                autoComplete="fname"
+                                autoComplete="firstName"
                                 name="firstName"
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="firstName"
                                 label="First Name"
-                                onChange={e => handleChange(e, setFirstName)}
+                                value={values.firstName}
+                                onChange={handleChange}
                                 autoFocus
+                                error={errors.firstName}
+                                helperText={errors.firstName}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -85,8 +74,11 @@ const RegisterForm = () => {
                                 id="lastName"
                                 label="Last Name"
                                 name="lastName"
-                                onChange={e => handleChange(e, setLastName)}
-                                autoComplete="lname"
+                                value={values.lastName}
+                                onChange={handleChange}
+                                autoComplete="lastName"
+                                error={errors.lastName}
+                                helperText={errors.lastName}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -97,8 +89,11 @@ const RegisterForm = () => {
                                 id="email"
                                 label="Email Address"
                                 name="email"
-                                onChange={e => handleChange(e, setEmail)}
+                                value={values.email}
+                                onChange={handleChange}
                                 autoComplete="email"
+                                error={errors.email}
+                                helperText={errors.email}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -110,8 +105,11 @@ const RegisterForm = () => {
                                 label="Password"
                                 type="password"
                                 id="password"
-                                onChange={e => handleChange(e, setPassword)}
+                                value={values.password}
+                                onChange={handleChange}
                                 autoComplete="current-password"
+                                error={errors.password}
+                                helperText={errors.password}
                             />
                         </Grid>
                     </Grid>
@@ -119,8 +117,8 @@ const RegisterForm = () => {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        onClick={handleSubmit}
                         className={classes.submit}
+                        type="submit"
                     >
                         Sign Up
                     </Button>

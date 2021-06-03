@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { signIn } from "../api/appUser";
 import { toast } from 'react-toastify';
-
+import signInFormValidator from "../util/validation/signInFormValidator";
 
 const useSignInForm = (from) => {
     const history = useHistory();
@@ -24,11 +24,12 @@ const useSignInForm = (from) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors(signInFormValidator(values));
         setIsSubmitting(true);
     };
 
     useEffect(() => {
-        if (isSubmitting) {
+        if (isSubmitting && Object.keys(errors).length === 0) {
             signIn(values.email, values.password)
                 .then((res) => {
 
@@ -45,7 +46,6 @@ const useSignInForm = (from) => {
                     history.push(from.pathname);
                 })
                 .catch(() => {
-                    setErrors({ message: "Invalid email/password" });
                     toast.error(
                         "Something went wrong :(",
                         {
@@ -54,9 +54,11 @@ const useSignInForm = (from) => {
                     setIsSubmitting(false);
                 });
         }
-    }, [isSubmitting]);
+    }, [errors, isSubmitting]);
 
     return { values, handleChange, handleSubmit, errors };
 };
+
+
 
 export default useSignInForm;
