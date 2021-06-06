@@ -47,7 +47,6 @@ const SignIn = (props) => {
 
     return (
         <Container maxWidth="xs">
-            <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />

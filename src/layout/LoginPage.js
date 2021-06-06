@@ -8,7 +8,7 @@ const LoginPage = () => {
         <React.Fragment>
             <Header/>
             <SignIn/>
-            {/*<Footer/>*/}
+            <Footer/>
         </React.Fragment>
     );
 };
