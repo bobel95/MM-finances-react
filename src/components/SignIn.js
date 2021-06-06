@@ -46,7 +46,7 @@ const SignIn = (props) => {
     const { values, handleChange, handleSubmit, errors } = useSignInForm(from);
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>

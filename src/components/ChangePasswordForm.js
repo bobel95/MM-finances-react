@@ -45,8 +45,7 @@ const ChangePasswordForm = (props) => {
     const { values, handleChange, handleSubmit, errors } = useChangePasswordForm();
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
+        <Container maxWidth="xs">
             <div className={classes.paper}>
                 <Typography component="h1" variant="h6">
                     Change Password
