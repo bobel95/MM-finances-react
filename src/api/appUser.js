@@ -36,4 +36,5 @@ const changePass = (prevPassword, newPassword, userId) => {
     return axios.post(`${BASE_URL}/api/user/change-password/${userId}`, data);
 }
 
+
 export {getUser, register, signIn, changePass};
