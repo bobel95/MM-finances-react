@@ -3,7 +3,7 @@ import {toast} from 'react-toastify';
 import {useHistory} from "react-router-dom";
 import {changePass} from "../api/appUser";
 
-const useChangePasswordForm = () => {
+const useChangePasswordForm = (reloadCallback) => {
     const history = useHistory();
 
     const [values, setValues] = useState({
@@ -33,11 +33,12 @@ const useChangePasswordForm = () => {
             changePass(values.previousPassword, values.newPassword, window.localStorage.getItem("userId"))
                 .then((res) => {
                     toast.success(
-                        "Password Successfully Changed!",
+                        "Password changed!",
                         {
                             position: "bottom-center"
                         }
                     )
+                    reloadCallback();
                 })
                 .catch(() => {
                     toast.error(
@@ -46,7 +47,7 @@ const useChangePasswordForm = () => {
                             position: "bottom-center"
                         }
                     )
-                    // setErrors({ message: "Actual password incorrect" });
+                    setErrors({ message: "Actual password incorrect" });
                     setIsSubmitting(false);
                 });
         }

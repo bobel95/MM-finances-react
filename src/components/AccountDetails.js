@@ -165,7 +165,7 @@ const AccountDetails = () => {
                     </CustomButton>
                     <CustomButton
                         onClick={() =>
-                            setDetailsAreaContent(<ChangePasswordForm/>)}>
+                            setDetailsAreaContent(<ChangePasswordForm reload={renderUserDataTable}/>)}>
                         <Typography variant="h6">Change Password</Typography>
                     </CustomButton>
 

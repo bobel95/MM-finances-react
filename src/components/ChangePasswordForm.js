@@ -41,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangePasswordForm = (props) => {
     const classes = useStyles();
+    const reloadCallback = props.reload;
 
-    const { values, handleChange, handleSubmit, errors } = useChangePasswordForm();
+    const { values, handleChange, handleSubmit, errors } = useChangePasswordForm(reloadCallback);
 
     return (
         <Container maxWidth="xs">
