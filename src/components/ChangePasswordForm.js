@@ -62,6 +62,8 @@ const ChangePasswordForm = (props) => {
                         type="password"
                         value={values.previousPassword}
                         onChange={handleChange}
+                        error={errors.previousPassword}
+                        helperText={errors.previousPassword}
                         autoFocus
                     />
                     <TextField
@@ -74,15 +76,9 @@ const ChangePasswordForm = (props) => {
                         id="newPassword"
                         value={values.newPassword}
                         onChange={handleChange}
+                        error={errors.newPassword}
+                        helperText={errors.newPassword}
                     />
-
-                    {errors.message && <p style={{
-                        textAlign: "center",
-                        border: "1px solid #700",
-                        borderRadius: ".25rem",
-                        backgroundColor: "#fdc4c4",
-                        color: "#700",
-                        padding: "1rem"}}>{errors.message}</p>}
 
                     <Button
                         type="submit"

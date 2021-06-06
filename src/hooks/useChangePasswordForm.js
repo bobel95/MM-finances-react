@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 import {useHistory} from "react-router-dom";
 import {changePass} from "../api/appUser";
+import {changePasswordValidator} from "../util/validation/changePasswordValidator";
 
 const useChangePasswordForm = (reloadCallback) => {
     const history = useHistory();
@@ -25,11 +26,12 @@ const useChangePasswordForm = (reloadCallback) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors(changePasswordValidator(values));
         setIsSubmitting(true);
     };
 
     useEffect(() => {
-        if (isSubmitting) {
+        if (isSubmitting && Object.keys(errors).length === 0) {
             changePass(values.previousPassword, values.newPassword, window.localStorage.getItem("userId"))
                 .then((res) => {
                     toast.success(
@@ -42,16 +44,16 @@ const useChangePasswordForm = (reloadCallback) => {
                 })
                 .catch(() => {
                     toast.error(
-                        "Something went wrong :(",
+                        "Actual password incorrect",
                         {
                             position: "bottom-center"
                         }
                     )
-                    setErrors({ message: "Actual password incorrect" });
+                    // setErrors(prev => prev.previousPassword = "Actual password incorrect");
                     setIsSubmitting(false);
                 });
         }
-    }, [isSubmitting]);
+    }, [isSubmitting, errors]);
 
     return { values, handleChange, handleSubmit, errors };
 };
