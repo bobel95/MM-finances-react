@@ -3,9 +3,10 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const SimpleLineChart = (props) => {
 
-    const { data, option1, option2 } = props;
+    const { data, option1, option2, max } = props;
+
         return (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer >
                 <LineChart
                     width={500}
                     height={300}
@@ -16,10 +17,11 @@ const SimpleLineChart = (props) => {
                         left: 20,
                         bottom: 5,
                     }}
+
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
+                    <XAxis dataKey="name"  />
+                    <YAxis type="number" domain={[0, parseInt(max + 1)]}/>
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey={option1} stroke="#8884d8" />
