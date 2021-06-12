@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { signIn } from "../api/appUser";
+import { toast } from 'react-toastify';
+import signInFormValidator from "../util/validation/signInFormValidator";
 
 const useSignInForm = (from) => {
     const history = useHistory();
@@ -22,45 +24,41 @@ const useSignInForm = (from) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors(signInFormValidator(values));
         setIsSubmitting(true);
     };
 
     useEffect(() => {
-        if (isSubmitting) {
-            console.log("in useEffect");
-
-            // Axios POST on the "/authenticate" endpoint of the api
-            // The server checks if the credentials (email & password) are valid
-            // And returns the JWT token, the user's name and ID
-            axios
-                .post("http://localhost:8080/authenticate", {
-                    username: values.email,
-                    password: values.password,
-                })
+        if (isSubmitting && Object.keys(errors).length === 0) {
+            signIn(values.email, values.password)
                 .then((res) => {
-                    console.log(res.data);
 
-                    // Store user info and the token in localStorage
+                    // Store user info and the token in localStorage (for testing purposes)
                     window.localStorage.setItem("userName", res.data.username);
                     window.localStorage.setItem("userId", res.data.userId);
-
                     window.localStorage.setItem("token", res.data.jwt);
-
-                    // Store a flag that lets us know the user has been logged in
                     window.localStorage.setItem("isLogged", true);
-
+                    toast.success(
+                        "Successfully Logged In!",
+                        {
+                            position: "bottom-center"
+                        });
                     history.push(from.pathname);
-                    console.log(from.pathname);
-                    // window.location.reload();
                 })
                 .catch(() => {
-                    setErrors({ message: "Invalid email/password" });
+                    toast.error(
+                        "Something went wrong :(",
+                        {
+                            position: "bottom-center"
+                        });
                     setIsSubmitting(false);
                 });
         }
-    }, [isSubmitting]);
+    }, [errors, isSubmitting]);
 
     return { values, handleChange, handleSubmit, errors };
 };
+
+
 
 export default useSignInForm;

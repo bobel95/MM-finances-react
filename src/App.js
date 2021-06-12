@@ -7,6 +7,9 @@ import DataPage from "./layout/DataPage";
 import Logout from "./components/Logout";
 import RegisterPage from "./layout/RegisterPage";
 import AboutPage from "./layout/AboutPage";
+import MyAccountPage from "./layout/MyAccountPage";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -29,6 +32,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
 );
 
+toast.configure();
+
 function App() {
 
   return (
@@ -37,6 +42,7 @@ function App() {
           <Route path="/login" component={LoginPage}/>
           <PrivateRoute path="/add" component={AddPaymentPage}/>
           <PrivateRoute path="/data" component={DataPage}/>
+          <PrivateRoute path="/account" component={MyAccountPage}/>
           <Route path="/logout" component={Logout}/>
           <Route path="/register" component={RegisterPage}/>
           <Route path="/about" component={AboutPage}/>

@@ -50,12 +50,15 @@ const HomePage = (props) => {
         fontWeight: 400,
         fontSize: "1.25rem",
         margin: "2rem",
+        borderRadius: "10px",
         color: "#EEEEEE",
-        padding: ".5rem",
+        padding: ".75rem",
         backgroundColor: "#00bd06",
         textDecoration: "none",
+        transition: "color ease-in-out .4s, background-color ease-in-out .4s",
         "&:hover": {
-            color: "#5c5c5c"
+            color: "#225800",
+            backgroundColor: "#00bd0655"
         }
     });
 
@@ -63,6 +66,24 @@ const HomePage = (props) => {
     const liStyle = {
         padding: ".5rem"
     }
+
+    const button = window.localStorage.getItem("isLogged")
+        ? (
+            <MyButton
+                to="/add"
+                component={RouterLink}
+            >Get Started
+            </MyButton>
+        )
+        : (
+            <MyButton
+                to="/register"
+                component={RouterLink}
+            >Sign up now!
+            </MyButton>
+        )
+
+
 
 
     return (
@@ -88,7 +109,7 @@ const HomePage = (props) => {
                                     padding: "0"
                                 }
                             }>
-                                <li style={liStyle}>Track your spendings</li>
+                                <li style={liStyle}>Track your expenses</li>
                                 <li style={liStyle}>Make saving plans</li>
                                 <li style={liStyle}>Get detailed overviews</li>
                             </ul>
@@ -96,16 +117,11 @@ const HomePage = (props) => {
                     </div>
 
                     <div>
-                        <MyButton
-                            to="/register"
-                            component={RouterLink}
-                        >Sign up now!
-                        </MyButton>
+                        {button}
                     </div>
                 </Content>
             </Container>
             <Footer/>
-
         </div>
     );
 }

@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,6 +13,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import Copyright from './Copyright';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addPayment } from "../api/payments";
 import axios from "axios";
 
 
@@ -54,24 +56,25 @@ export default function AddPaymentForm() {
 
     const [category, setCategory] = React.useState('');
     const [amount, setAmount] = React.useState('');
-    const [message, setMessage] = React.useState('');
 
     const handleSubmit = () => {
-
+        const userId = window.localStorage.getItem("userId");
         const dateString = getDateString();
-        axios
-            .post(`http://localhost:8080/api/payment/${window.localStorage.getItem("userId")}`,
-                {
-                    date: dateString,
-                    paymentCategory: category,
-                    money: {
-                        amount: amount,
-                        currency: "RON"
-                    }
-                })
+        addPayment(userId, dateString, category, amount)
             .then(res => {
-                console.log(res);
-                setMessage("Payment added");
+                toast.success(
+                    "Successfully Added!",
+                    {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
+            })
+            .catch(() => {
+                toast.error(
+                    "Something went wrong :(",
+                    {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    }
+                )
             })
     }
 
@@ -101,16 +104,9 @@ export default function AddPaymentForm() {
         return date;
     }
 
-    const messageContainer = message ?
-        (<div className={classes.message}>
-            <Typography variant="subtitle1">{message}</Typography>
-        </div>)
-        : "";
-
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
@@ -118,7 +114,6 @@ export default function AddPaymentForm() {
                 <Typography component="h1" variant="h5">
                     Add new spending
                 </Typography>
-                {messageContainer}
                 <form className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
