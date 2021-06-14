@@ -45,6 +45,11 @@ const getTheme = percentage => {
             symbol: percentage + '%',
             trailColor: trailColor,
             color: color
+        },
+        error: {
+            symbol: percentage + "%",
+            trailColor: trailColor,
+            color: color
         }
     }
 }
@@ -93,6 +98,7 @@ const IncomeData = () => {
         <div style={containerStyle}>
             <Progress
                 type="circle"
+                status="error"
                 strokeWidth={11}
                 width={150}
                 theme={getTheme((100 * paymentsTotal / incomeTotal).toFixed(2))}
