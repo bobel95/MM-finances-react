@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import CountUp from 'react-countup';
 import {AccountCircle} from "@material-ui/icons";
 import ChangePasswordForm from "./ChangePasswordForm";
+import IncomeData from "./IncomeData";
 
 const createRow = (key, val) => {
     return {key, val};
@@ -26,8 +27,7 @@ const AccountDetails = () => {
     }
 
     const dataContainerStyle = {
-        backgroundColor: "#f1f1f1",
-        background: "linear-gradient(#ddd, #ddd) no-repeat center/2px 100%",
+        backgroundColor: "#f8f8f8",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -35,9 +35,14 @@ const AccountDetails = () => {
         border: "1px solid #a2a2a2",
         borderRadius: "1rem",
         margin: "1rem",
-        width: "100%",
+        width: "90%",
         padding: "1rem 0"
     }
+
+    const dataContainerCenterBar = {
+        ...dataContainerStyle,
+        background: "linear-gradient(#ddd, #ddd) no-repeat center/2px 100%",
+    };
 
     const secondaryContainerStyle = {
         background: "linear-gradient(to left, #f1f1f1 50%, #00bd0699 50%)",
@@ -47,12 +52,17 @@ const AccountDetails = () => {
         flexDirection: "row",
         border: "1px solid #a2a2a2",
         borderRadius: "1rem",
-        width: "100%",
+        width: "90%",
         padding: "1rem 0"
     }
 
     const Title = styled(Typography) ({
         borderBottom: "5px solid #00bd0699",
+    })
+
+    const Subtitle = styled(Typography) ({
+        borderBottom: "2px solid black",
+
     })
 
     const CustomButton = styled(Button) ({
@@ -113,7 +123,19 @@ const AccountDetails = () => {
             <Title variant="h4" style={{margin: "1rem"}}>
                 {`${user.firstName} ${user.lastName}`}
             </Title>
+            <hr/>
+
+            <Subtitle variant="h6" style={{marginTop: "10px"}}>
+                Income Data
+            </Subtitle>
             <div style={dataContainerStyle}>
+                <IncomeData/>
+            </div>
+
+            <Subtitle variant="h6">
+                All time stats
+            </Subtitle>
+            <div style={dataContainerCenterBar}>
                 <div>
                     <Typography variant="h5">
                         <CountUp
@@ -137,6 +159,7 @@ const AccountDetails = () => {
                     </Typography>
                 </div>
             </div>
+
             <div style={secondaryContainerStyle}>
                 <div id="buttons-container" style={{
                     display: "flex",
@@ -145,13 +168,11 @@ const AccountDetails = () => {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "flex-start",
-                    // minWidth: "50%",
                     width: "50%",
                     color: "#f1f1f1",
                 }}>
 
-                    <Typography variant="subtitle2" style={
-                        {
+                    <Typography variant="subtitle2" style={{
                             margin: "0 0 0 1rem",
                             alignSelf: "self-start",
                             color: "#0e4200"
