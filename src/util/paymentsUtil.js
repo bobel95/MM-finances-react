@@ -22,8 +22,20 @@ const filterLastMonthPayments = data => {
     return res;
 }
 
+const filterPaymentsByDate = (payments, date) => {
+    return payments.filter(p => new Date(p.date) > date)
+}
+
+const filterPaymentsByDateBetween = (payments, startDate, endDate) => {
+    return payments.filter(p => {
+        let paymentDate = new Date(p.date);
+        return (paymentDate > startDate) &&
+            (paymentDate < endDate);
+    })
+}
+
 const createData = (category, amount) => {
     return {name: category, value: amount};
 }
 
-export {groupPaymentsByCategory, filterLastMonthPayments};
+export {groupPaymentsByCategory, filterLastMonthPayments, filterPaymentsByDate};
