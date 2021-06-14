@@ -7,7 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
-import {TableCell} from "@material-ui/core";
+import TableCell from "@material-ui/core/TableCell";
+import Button from "@material-ui/core/Button";
+import {useHistory} from "react-router-dom";
 
 const containerStyle = {
     display: "flex",
@@ -56,6 +58,7 @@ const getTheme = percentage => {
 
 const IncomeData = () => {
 
+    const history = useHistory();
     const [userData, setUserData] = useState(null);
     const [paymentsData, setPaymentsData] = useState({});
 
@@ -74,6 +77,11 @@ const IncomeData = () => {
 
     useEffect(() => {
         if (userData) {
+
+            if (!userData.incomeList.length) {
+                return;
+            }
+
             let incomeDate = userData.incomeList[0].date;
             incomeDate = new Date(incomeDate);
             incomeDate.setMonth(incomeDate.getMonth() - 1);
@@ -93,7 +101,17 @@ const IncomeData = () => {
     }, [userData]);
 
     return isLoading
-        ? (<div>Loading</div>)
+        ? (<div style={containerStyle}>
+            <Typography variant="subtitle1">
+                No income added yet,
+            </Typography>
+            <Button
+                onClick={() => history.push("/add-income")}
+                style={{textTransform: "none", color: "blue"}}
+            >
+                add income
+            </Button>
+        </div>)
         : (
         <div style={containerStyle}>
             <Progress
