@@ -59,6 +59,7 @@ const getTheme = percentage => {
 const IncomeData = () => {
 
     const history = useHistory();
+
     const [userData, setUserData] = useState(null);
     const [paymentsData, setPaymentsData] = useState({});
 
@@ -77,14 +78,14 @@ const IncomeData = () => {
 
     useEffect(() => {
         if (userData) {
-
             if (!userData.incomeList.length) {
                 return;
             }
 
             let incomeDate = userData.incomeList[0].date;
             incomeDate = new Date(incomeDate);
-            incomeDate.setMonth(incomeDate.getMonth() - 1);
+            incomeDate.setMonth(new Date().getMonth() - 1);
+            incomeDate.setFullYear(new Date().getFullYear());
 
             let filteredPayments = filterPaymentsByDate(userData.paymentList, incomeDate);
             filteredPayments = groupPaymentsByCategory(filteredPayments);
@@ -94,7 +95,6 @@ const IncomeData = () => {
                 .reduce((prev, p) => prev + p.value, 0)
             );
             setIncomeTotal(userData.incomeList[0].money.amount);
-
 
             setIsLoading(false);
         }
