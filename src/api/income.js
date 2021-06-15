@@ -18,12 +18,30 @@ const addIncome = (amount, dateDay) => {
         incomeCategory: "MONTHLY",
     }
 
-    console.log(data);
-
     return axios.post(
         `${BASE_URL}/${userId}`,
         data
     );
 }
 
-export {addIncome};
+const updateIncome = (amount, dateDay, id) => {
+    const date = new Date();
+    date.setDate(dateDay);
+
+    const data = {
+        money: {
+            currency: "RON",
+            amount: amount
+        },
+        date: getDateString(date),
+        incomeCategory: "MONTHLY",
+        id: id
+    }
+
+    return axios.put(
+        BASE_URL,
+        data
+    );
+}
+
+export {addIncome, updateIncome};

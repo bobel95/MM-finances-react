@@ -11,6 +11,7 @@ import MyAccountPage from "./layout/MyAccountPage";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddIncomePage from "./layout/AddIncomePage";
+import UpdateIncomePage from "./layout/UpdateIncomePage";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -45,6 +46,7 @@ function App() {
           <PrivateRoute path="/data" component={DataPage}/>
           <PrivateRoute path="/account" component={MyAccountPage}/>
           <PrivateRoute path="/add-income" component={AddIncomePage}/>
+          <PrivateRoute path="/update-income" component={UpdateIncomePage}/>
           <Route path="/logout" component={Logout}/>
           <Route path="/register" component={RegisterPage}/>
           <Route path="/about" component={AboutPage}/>

@@ -9,12 +9,12 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const containerStyle = {
     display: "flex",
     flexDirection: "row",
-    width: "60%",
+    width: "70%",
     alignItems: "center",
     justifyContent: "center"
 }
@@ -24,6 +24,13 @@ const textContainerStyle = {
     flex: "1",
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+}
+
+const captionStyle = {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
 }
@@ -126,7 +133,6 @@ const IncomeData = () => {
             />
             <div style={textContainerStyle}>
                 <Table>
-                    <caption>Resets on {new Date(userData.incomeList[0].date).getDate()}th every month</caption>
                     <TableBody>
                         <TableRow>
                             <TableCell style={{textAlign: "center"}}>
@@ -143,6 +149,25 @@ const IncomeData = () => {
                             </TableCell>
                         </TableRow>
                     </TableBody>
+
+                    <caption style={captionStyle}>
+                        Resets on {new Date(userData.incomeList[0].date).getDate()}th every month
+                        <Link
+                            to={{
+                                pathname: "/update-income",
+                                state: {
+                                    data: {
+                                        amount: incomeTotal,
+                                        date: new Date(userData.incomeList[0].date).getDate(),
+                                        id: userData.incomeList[0].id
+                                    }
+                                }
+                            }}>
+                            <Button style={{textTransform: "none"}}>
+                                Update Income
+                            </Button>
+                        </Link>
+                    </caption>
                 </Table>
             </div>
         </div>

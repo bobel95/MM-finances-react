@@ -1,16 +1,16 @@
 import React from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
-import AddIncomeForm from "../components/AddIncomeForm";
+import UpdateIncomeForm from "../components/UpdateIncomeForm";
 
-const AddIncomePage = () => {
+const UpdateIncomePage = () => {
     return (
         <div>
             <Header/>
-            <AddIncomeForm/>
+            <UpdateIncomeForm/>
             <Footer/>
         </div>
     );
 };
 
-export default AddIncomePage;
+export default UpdateIncomePage;
