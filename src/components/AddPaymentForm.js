@@ -1,7 +1,6 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from '@material-ui/core/Box';
@@ -16,8 +15,7 @@ import Copyright from './Copyright';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addPayment } from "../api/payments";
-import axios from "axios";
-
+import { getDateString } from "../util/stringUtils";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -59,7 +57,7 @@ export default function AddPaymentForm() {
 
     const handleSubmit = () => {
         const userId = window.localStorage.getItem("userId");
-        const dateString = getDateString();
+        const dateString = getDateString(new Date());
         addPayment(userId, dateString, category, amount)
             .then(res => {
                 toast.success(
@@ -85,23 +83,6 @@ export default function AddPaymentForm() {
 
     const handleAmountChange = (event) => {
         setAmount(event.target.value);
-    }
-
-    const getDateString = () => {
-        let date = new Date();
-
-        return [
-            date.getFullYear(),
-            padWith0(date.getMonth() + 1),
-            padWith0(date.getDate())
-        ].join("-");
-    }
-
-    const padWith0 = (date) => {
-        if (date.toString().length === 1) {
-            return `0${date}`;
-        }
-        return date;
     }
 
 
