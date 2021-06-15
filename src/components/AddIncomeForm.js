@@ -4,53 +4,17 @@ import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Copyright from "./Copyright";
-import {makeStyles} from "@material-ui/core/styles";
 import useIncomeForm from "../hooks/useIncomeForm";
+import {useFormStyles} from "../util/styleUtils";
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(14),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: "green",
-    },
-    form: {
-        width: '100%',
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-    message: {
-        fontWeight: "200",
-        textAlign: "center",
-        backgroundColor: "#b7fab3",
-        padding: ".25rem",
-        margin: ".5rem",
-        border: "1px solid",
-        borderColor: "#18b300",
-        borderRadius: ".5rem",
-        width: "80%",
-        color: "green",
-    }
-}));
-
-const IncomeForm = () => {
+const AddIncomeForm = () => {
 
     const { values, handleChange, handleSubmit, errors } = useIncomeForm();
 
-    const classes = useStyles();
+    const classes = useFormStyles();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -117,4 +81,4 @@ const IncomeForm = () => {
     );
 };
 
-export default IncomeForm;
+export default AddIncomeForm;
