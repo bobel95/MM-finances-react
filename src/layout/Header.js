@@ -62,7 +62,6 @@ const Header = () => {
         fontFamily: "Roboto, sans-serif",
         fontWeight: 500,
         fontSize: "1rem",
-        // size: "18px",
         margin: "1.25em",
         color: "#EEEEEE",
         textDecoration: "none",
@@ -101,7 +100,6 @@ const Header = () => {
                             style={{
                                 color: "inherit",
                                 textDecoration: "none",
-
                             }}>
                             MM Finances
                         </Link>

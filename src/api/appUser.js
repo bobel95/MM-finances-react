@@ -3,7 +3,9 @@ import axios from 'axios';
 const BASE_URL = "http://localhost:8080";
 
 const getUser = id => {
-    return axios.get(`${BASE_URL}/api/user/${id}`);
+
+    const userId = window.localStorage.getItem("userId");
+    return axios.get(`${BASE_URL}/api/user/${userId}`);
 }
 
 const register = (firstName, lastName, email, password) => {

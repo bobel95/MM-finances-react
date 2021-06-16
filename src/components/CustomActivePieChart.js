@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
-import {formatEnumString} from '../util/stringUtils';
-
-
-const createData = (category, amount) => {
-    category = formatEnumString(category);
-    return {name: category, value: amount};
-}
-
-const groupByCategory = (data) => {
-
-    return Array.from(data.reduce(
-        (m, {name, value}) => m.set(name, (m.get(name) || 0 ) + value), new Map),
-        ([name, value]) => ({name, value}));
-}
+import {groupPaymentsByCategory} from "../util/paymentsUtil";
 
 const formatData = (data) => {
-    data = groupByCategory(data);
+    data = groupPaymentsByCategory(data);
     const COLORS = ['#DF602A', '#B85194', '#00F5B4', '#9DA9E7', '#975E5F', '#790DAB', '#FFEC51', '#230C0F', '#C7B494', '#4D4B81', '#718C98'];
     data.forEach((entry, i) => {
         entry.color = COLORS[i];
@@ -74,9 +61,7 @@ const renderActiveShape = (props) => {
 const CustomActivePieChart = (props) => {
 
     const payments = props.payments;
-
-    let data = payments.map((p) => createData(p.paymentCategory, p.money.amount));
-    data = formatData(data);
+    let data = formatData(payments);
     const [activeIndex, setActiveIndex] = useState(0);
 
     const onPieEnter = (_, index) => {

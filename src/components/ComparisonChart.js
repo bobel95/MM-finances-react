@@ -31,16 +31,31 @@ const groupByMonth = payments => {
         } , []);
 }
 
+const getMaxAmount = (data1, data2) => {
+    let maxArr = [];
+
+    for (let i = 0; i < data1.length; i++) {
+        maxArr.push(data1[i].amount);
+    }
+
+    for (let i = 0; i < data2.length; i++) {
+        maxArr.push(data2[i].amount);
+    }
+
+    return Math.max(...maxArr);
+}
+
 const ComparisonChart = (props) => {
     const payments = props.payments;
     const uniqueOptions = payments
         .map(p => p.paymentCategory)
         .filter((option, i, self) => self.indexOf(option) === i);
 
-    console.log(uniqueOptions);
+
     const [option1, setOption1] = useState(uniqueOptions[0]);
     const [option2, setOption2] = useState(uniqueOptions[1]);
     const [data, setData] = useState({});
+    const [max, setMax] = useState(0);
 
 
 
@@ -65,6 +80,8 @@ const ComparisonChart = (props) => {
         let firstOptionData = groupByMonth(firstOptionPayments);
         let secondOptionData = groupByMonth(secondOptionPayments);
 
+        setMax(getMaxAmount(firstOptionData, secondOptionData));
+
         let tempData = [];
         for (let i = 0; i < monthNames.length; i++) {
             let monthData = {
@@ -79,12 +96,12 @@ const ComparisonChart = (props) => {
 
             tempData.push(monthData);
         }
-        console.log(data);
         setData(tempData);
+
     }
 
     useEffect(createData, [option1, option2]);
-    console.log(payments);
+    // console.log(payments);
 
     const mainContainerStyle = {
         width: "70%",
@@ -172,7 +189,7 @@ const ComparisonChart = (props) => {
                 </div>
             </div>
             <div style = {chartContainerStyle}>
-                <LineChart data={data} option1={option1} option2={option2}/>
+                <LineChart data={data} option1={option1} option2={option2} max={max}/>
             </div>
         </div>
     );
