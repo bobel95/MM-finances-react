@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { DataGrid } from "@material-ui/data-grid";
+import {DataGrid, GridFooter} from "@material-ui/data-grid";
 import {formatEnumString} from "../util/stringUtils";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -8,12 +8,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Button, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import CountUp from "react-countup";
 
 
 const mainContainerStyle = {
-    width: "50%",
-    margin: "1rem auto",
-    height: "100%",
+    width: "60%",
+    margin: "1rem auto 120px",
     borderRadius: "1rem",
     display: "flex",
     flexDirection: "column",
@@ -33,6 +34,14 @@ const filtersContainerStyle = {
     borderTopRightRadius: "1rem"
 }
 
+const totalContainerStyle = {
+    border: "1px solid black",
+    borderRadius: "1rem",
+    backgroundColor: "#f1f1f1",
+    padding: "1rem",
+    width: "40%",
+    margin: ".5rem auto",
+}
 const PaymentsTable = (props) => {
 
     const payments = props.payments;
@@ -153,6 +162,19 @@ const PaymentsTable = (props) => {
 
             <div style={{ height: 400, width: '100%'}}>
                 <DataGrid rows={rows} columns={columns} pageSize={5} />
+            </div>
+
+            <div style={totalContainerStyle}>
+                <Typography variant="h6">
+                    <CountUp
+                        start={0}
+                        end={filteredPayments.reduce((prev, p) => p.money.amount + prev, 0)}
+                        decimals={2}
+                        duration={1.5}
+                        prefix={"Total spent: "}
+                        suffix={" RON"}
+                    />
+                </Typography>
             </div>
         </div>
     );

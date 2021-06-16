@@ -2,8 +2,6 @@ import React from 'react';
 import AccountDetails from "../components/AccountDetails";
 import Header from "./Header";
 import Footer from "./Footer";
-import {Typography} from "@material-ui/core";
-import IncomeData from "../components/IncomeData";
 
 const MyAccountPage = () => {
 
