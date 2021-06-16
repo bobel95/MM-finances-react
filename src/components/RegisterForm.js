@@ -12,29 +12,10 @@ import Copyright from "./Copyright";
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import useRegisterForm from "../hooks/useRegisterForm";
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(14),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
+import {useFormStyles} from "../util/styleUtils";
 
 const RegisterForm = () => {
-    const classes = useStyles();
+    const classes = useFormStyles();
 
     const { values, handleChange, handleSubmit, errors } = useRegisterForm();
 
