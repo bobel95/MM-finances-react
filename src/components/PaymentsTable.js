@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {Button} from "@material-ui/core";
 
 
 const mainContainerStyle = {
@@ -83,6 +84,13 @@ const PaymentsTable = (props) => {
 
     useEffect(createRows, [filteredPayments]);
 
+
+    const resetFilters = () => {
+        setCategory("All");
+        setStartDate(null);
+        setEndDate(null);
+    }
+
     return (
         <div style={mainContainerStyle}>
             <form>
@@ -114,21 +122,21 @@ const PaymentsTable = (props) => {
                 <InputLabel>Start Date</InputLabel>
                 <DatePicker
                     selected={startDate}
-                    onChange={(date) => {
-                        console.log(date);
-                        setStartDate(date)
-                    }}
+                    onChange={(date) => setStartDate(date)}
                 />
 
                 <InputLabel>End Date</InputLabel>
                 <DatePicker
                     selected={endDate}
-                    onChange={(date) => {
-                        console.log(date);
-                        setEndDate(date)
-                    }}
+                    onChange={(date) => setEndDate(date)}
                 />
 
+                <Button
+                    style={{textTransform: "none"}}
+                    onClick={resetFilters}
+                    >
+                    Reset Filters
+                </Button>
             </form>
 
             <div style={{ height: 400, width: '100%'}}>
