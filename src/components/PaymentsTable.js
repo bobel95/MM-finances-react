@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, {useEffect, useState} from "react";
+import { DataGrid } from "@material-ui/data-grid";
 import {formatEnumString} from "../util/stringUtils";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const mainContainerStyle = {
@@ -24,7 +26,12 @@ const PaymentsTable = (props) => {
     const [rows, setRows] = useState([]);
     const [filteredPayments, setFilteredPayments] = useState([...payments]);
     const [category, setCategory] = useState("All");
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
+    useEffect(() => {
+        setFilteredPayments(payments)
+    }, [payments]);
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 100 },
@@ -39,6 +46,7 @@ const PaymentsTable = (props) => {
     }
 
     const createRows = () => {
+        console.log(filteredPayments);
         setRows(filteredPayments.map(p =>
             createData(
                 p.id,
@@ -54,13 +62,24 @@ const PaymentsTable = (props) => {
     }
 
     useEffect(() => {
-        setFilteredPayments(
-            category !== "All"
-                ? payments.filter(p => p.paymentCategory === category)
-                : payments
-        );
-    }, [category]);
+        const datesAreSelected = startDate != null && endDate != null;
+        const dateFilteredPayments =  datesAreSelected
+            ? payments.filter(p => {
+                return startDate < new Date(p.date) && new Date(p.date) < endDate
+            })
+            : [...payments];
 
+        console.log(startDate);
+        console.log(endDate);
+        console.log(dateFilteredPayments);
+
+        const categoryIsSelected = category !== "All";
+        const categoryFilteredPayments = categoryIsSelected
+            ? dateFilteredPayments.filter(p => p.paymentCategory === category)
+            : [...dateFilteredPayments];
+
+        setFilteredPayments(categoryFilteredPayments);
+    }, [category, startDate, endDate]);
 
     useEffect(createRows, [filteredPayments]);
 
@@ -91,6 +110,25 @@ const PaymentsTable = (props) => {
 
                     </Select>
                 </FormControl>
+
+                <InputLabel>Start Date</InputLabel>
+                <DatePicker
+                    selected={startDate}
+                    onChange={(date) => {
+                        console.log(date);
+                        setStartDate(date)
+                    }}
+                />
+
+                <InputLabel>End Date</InputLabel>
+                <DatePicker
+                    selected={endDate}
+                    onChange={(date) => {
+                        console.log(date);
+                        setEndDate(date)
+                    }}
+                />
+
             </form>
 
             <div style={{ height: 400, width: '100%'}}>
