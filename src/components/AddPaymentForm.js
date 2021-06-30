@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -14,15 +14,24 @@ import Copyright from './Copyright';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addPayment } from "../api/payments";
-import { getDateString } from "../util/stringUtils";
-import {useFormStyles} from "../util/styleUtils";
+import {formatEnumString, getDateString} from "../util/stringUtils";
+import { useFormStyles } from "../util/styleUtils";
+import {getCustomPaymentCategories} from "../api/paymentCategories";
+import SimpleModal from "./SimpleModal";
 
 
 export default function AddPaymentForm() {
     const classes = useFormStyles();
 
-    const [category, setCategory] = React.useState('');
-    const [amount, setAmount] = React.useState('');
+    const [customCategories, setCustomCategories] = useState([])
+    const [category, setCategory] = useState('');
+    const [amount, setAmount] = useState('');
+
+    useEffect(() => {
+        getCustomPaymentCategories()
+            .then(res => setCustomCategories(res.data));
+    }, []);
+
 
     const handleSubmit = () => {
         const userId = window.localStorage.getItem("userId");
@@ -99,8 +108,16 @@ export default function AddPaymentForm() {
                             <MenuItem value={"UTILITIES"}>Utilities</MenuItem>
                             <MenuItem value={"INVESTMENTS"}>Investments</MenuItem>
                             <MenuItem value={"OTHERS"}>Others</MenuItem>
+                            {
+                                customCategories && customCategories
+                                    .map(c =>
+                                    <MenuItem value={c.category}>
+                                        {formatEnumString(c.category)}
+                                    </MenuItem>)
+                            }
                         </Select>
                     </FormControl>
+                    <SimpleModal/>
                     <Button
                         fullWidth
                         variant="contained"
