@@ -42,7 +42,7 @@ const useSignInForm = (from) => {
                 })
                 .catch(() => {
                     toast.error(
-                        "Something went wrong!",
+                        "Category already exists!",
                         {
                             position: "bottom-center"
                         }
