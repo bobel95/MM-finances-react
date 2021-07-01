@@ -2,6 +2,7 @@ import React from 'react';
 import Header from "./Header";
 import {Container, Typography, styled, Paper, Button} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
+import { toast } from 'react-toastify';
 import Footer from "./Footer";
 
 const HomePage = (props) => {
@@ -67,6 +68,20 @@ const HomePage = (props) => {
         padding: ".5rem"
     }
 
+    if (props.location.state) {
+        const { loggedOut } = props.location.state;
+        if (loggedOut) {
+            toast.warn(
+                "Logged Out",
+                {
+                    position: "bottom-center"
+                }
+            )
+
+            props.location.state = {};
+        }
+    }
+
     const button = window.localStorage.getItem("isLogged")
         ? (
             <MyButton
@@ -82,8 +97,6 @@ const HomePage = (props) => {
             >Sign up now!
             </MyButton>
         )
-
-
 
 
     return (
