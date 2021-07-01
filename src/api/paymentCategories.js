@@ -9,4 +9,15 @@ const getCustomPaymentCategories = () => {
     return axios.get(`${BASE_URL}/${userId}`);
 }
 
-export {getCustomPaymentCategories};
+const addPaymentCategory = (category) => {
+    const userId = window.localStorage.getItem("userId");
+
+    const data = {
+        category: category
+    };
+
+    return axios.post(`${BASE_URL}/${userId}`, data);
+
+}
+
+export { getCustomPaymentCategories, addPaymentCategory };

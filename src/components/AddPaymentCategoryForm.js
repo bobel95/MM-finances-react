@@ -14,8 +14,11 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Copyright from "./Copyright";
 import {useFormStyles} from "../util/styleUtils";
+import {addPaymentCategory} from "../api/paymentCategories";
+import {toast} from "react-toastify";
 
-const AddPaymentCategoryForm = () => {
+const AddPaymentCategoryForm = (props) => {
+    const { handleCloseModal } = props;
     const classes = useFormStyles();
 
     const [category, setCategory] = useState("");
@@ -23,6 +26,27 @@ const AddPaymentCategoryForm = () => {
     const handleCategoryChange = (e) => {
         setCategory(e.target.value);
         console.log(category);
+    }
+
+    const handleSubmit = () => {
+        // console.log("mere")
+        addPaymentCategory(category)
+            .then(() => {
+                toast.success(
+                    "Password changed!",
+                    {
+                        position: "bottom-center"
+                    }
+                )
+            })
+            .catch(() => {
+                toast.error(
+                    "Actual password incorrect",
+                    {
+                        position: "bottom-center"
+                    }
+                )
+            });
     }
 
     return (
@@ -50,7 +74,7 @@ const AddPaymentCategoryForm = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        // onClick={handleSubmit}
+                        onClick={handleSubmit}
                     >
                         Add Category
                     </Button>

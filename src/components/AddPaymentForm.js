@@ -110,8 +110,8 @@ export default function AddPaymentForm() {
                             <MenuItem value={"OTHERS"}>Others</MenuItem>
                             {
                                 customCategories && customCategories
-                                    .map(c =>
-                                    <MenuItem value={c.category}>
+                                    .map((c, i) =>
+                                    <MenuItem key={i} value={c.category}>
                                         {formatEnumString(c.category)}
                                     </MenuItem>)
                             }
