@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,22 +8,32 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import Copyright from './Copyright';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addPayment } from "../api/payments";
-import { getDateString } from "../util/stringUtils";
-import {useFormStyles} from "../util/styleUtils";
+import {formatEnumString, getDateString} from "../util/stringUtils";
+import { useFormStyles } from "../util/styleUtils";
+import {getCustomPaymentCategories} from "../api/paymentCategories";
+import SimpleModal from "./SimpleModal";
+import AddPaymentCategoryForm from "./AddPaymentCategoryForm";
 
 
 export default function AddPaymentForm() {
     const classes = useFormStyles();
 
-    const [category, setCategory] = React.useState('');
-    const [amount, setAmount] = React.useState('');
+    const [customCategories, setCustomCategories] = useState([])
+    const [category, setCategory] = useState('');
+    const [amount, setAmount] = useState('');
+    const [categoryAdded, setCategoryAdded] = useState(false);
+
+    useEffect(() => {
+        getCustomPaymentCategories()
+            .then(res => setCustomCategories(res.data));
+    }, [categoryAdded]);
+
 
     const handleSubmit = () => {
         const userId = window.localStorage.getItem("userId");
@@ -90,18 +100,37 @@ export default function AddPaymentForm() {
                             required
                         >
                             <MenuItem value={"FOOD"}>Food</MenuItem>
-                            <MenuItem value={"ALCOHOLIC_DRINKS"}>Alcoholic Drinks</MenuItem>
-                            <MenuItem value={"NON_ALCOHOLIC_DRINKS"}>Non alcoholic drinks</MenuItem>
-                            <MenuItem value={"TOBACCO"}>Tobacco</MenuItem>
                             <MenuItem value={"CLOTHING"}>Clothing</MenuItem>
                             <MenuItem value={"TRANSPORTATION"}>Transportation</MenuItem>
                             <MenuItem value={"TOOLS"}>Tools</MenuItem>
-                            <MenuItem value={"PETS"}>Pets</MenuItem>
                             <MenuItem value={"UTILITIES"}>Utilities</MenuItem>
                             <MenuItem value={"INVESTMENTS"}>Investments</MenuItem>
-                            <MenuItem value={"OTHERS"}>Others</MenuItem>
+                            {
+                                customCategories && customCategories
+                                    .map((c, i) =>
+                                    <MenuItem key={i} value={c.category}>
+                                        {formatEnumString(c.category)}
+                                    </MenuItem>)
+                            }
                         </Select>
                     </FormControl>
+
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        paddingTop: "1rem"
+                    }}>
+                        <Typography variant="body2">
+                            Can't find the category you're looking for?
+                        </Typography>
+                        <SimpleModal
+                            content={<AddPaymentCategoryForm/>}
+                        />
+                    </div>
+
+
                     <Button
                         fullWidth
                         variant="contained"

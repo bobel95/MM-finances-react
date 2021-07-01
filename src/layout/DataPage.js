@@ -58,7 +58,7 @@ const DataPage = () => {
         <div>
             <Header/>
 
-            <div style={{marginTop: "120px", textAlign: "center", height: "500px"}}>
+            <div style={{marginTop: "80px", marginBottom: "300px", textAlign: "center", height: "500px"}}>
 
                 <Typography variant="h4" gutterBottom>Your spendings</Typography>
                 <FormControl
@@ -79,7 +79,8 @@ const DataPage = () => {
 
                     </Select>
                 </FormControl>
-                {content}
+
+                    {content}
 
             </div>
 

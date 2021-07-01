@@ -7,7 +7,9 @@ const addPayment = (userId, dateString, category, amount) => {
 
     const data = {
         date : dateString,
-        paymentCategory: category,
+        paymentCategory: {
+            category: category
+        },
         money: {
             amount: amount,
             currency: DEFAULT_CURRENCY
