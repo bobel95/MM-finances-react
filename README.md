@@ -16,7 +16,7 @@ This app consumes the <a href="https://github.com/bobel95/mihmih-finances-api">M
 
 Currently working on the project in 1 week sprints.
 
-Completed sprints: `1`
+Completed sprints: `2`
 
 ## Features
 
