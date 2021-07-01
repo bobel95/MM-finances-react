@@ -16,38 +16,12 @@ import Copyright from "./Copyright";
 import {useFormStyles} from "../util/styleUtils";
 import {addPaymentCategory} from "../api/paymentCategories";
 import {toast} from "react-toastify";
+import useAddPaymentCategoryForm from "../hooks/useAddPaymentCategoryForm";
 
 const AddPaymentCategoryForm = (props) => {
-    const { handleCloseModal } = props;
     const classes = useFormStyles();
 
-    const [category, setCategory] = useState("");
-
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
-        console.log(category);
-    }
-
-    const handleSubmit = () => {
-        // console.log("mere")
-        addPaymentCategory(category)
-            .then(() => {
-                toast.success(
-                    "Password changed!",
-                    {
-                        position: "bottom-center"
-                    }
-                )
-            })
-            .catch(() => {
-                toast.error(
-                    "Actual password incorrect",
-                    {
-                        position: "bottom-center"
-                    }
-                )
-            });
-    }
+    const { values, handleChange, handleSubmit, errors } = useAddPaymentCategoryForm();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -55,7 +29,7 @@ const AddPaymentCategoryForm = (props) => {
                 <Typography component="h1" variant="h5">
                     Add new category
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -65,8 +39,10 @@ const AddPaymentCategoryForm = (props) => {
                         label="Category"
                         name="category"
                         autoFocus
-                        onChange={handleCategoryChange}
-                        value={category}
+                        onChange={handleChange}
+                        value={values.category}
+                        error={errors.category}
+                        helperText={errors.category}
                     />
 
                     <Button
@@ -75,8 +51,9 @@ const AddPaymentCategoryForm = (props) => {
                         color="primary"
                         className={classes.submit}
                         onClick={handleSubmit}
+                        style={{textTransform: "none"}}
                     >
-                        Add Category
+                        Submit
                     </Button>
                 </form>
             </div>

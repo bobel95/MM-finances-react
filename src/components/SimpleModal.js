@@ -2,7 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import AddPaymentCategoryForm from "./AddPaymentCategoryForm";
+import Typography from "@material-ui/core/Typography";
 
 const modalStyle = {
     top: `${50}%`,
@@ -21,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SimpleModal() {
+const SimpleModal = (props) => {
+    const { content } = props;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -35,15 +38,18 @@ export default function SimpleModal() {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <AddPaymentCategoryForm handleCloseModal={handleClose}/>
+            {/*<AddPaymentCategoryForm handleCloseModal={handleClose}/>*/}
+            {content}
         </div>
     );
 
     return (
         <div>
-            <Button onClick={handleOpen}>
-                Add a new category
-            </Button>
+            <Typography>
+                <Link href="#" onClick={handleOpen} variant="body2">
+                    Add a custom category
+                </Link>
+            </Typography>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -55,3 +61,5 @@ export default function SimpleModal() {
         </div>
     );
 }
+
+export default SimpleModal;

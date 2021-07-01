@@ -18,6 +18,7 @@ import {formatEnumString, getDateString} from "../util/stringUtils";
 import { useFormStyles } from "../util/styleUtils";
 import {getCustomPaymentCategories} from "../api/paymentCategories";
 import SimpleModal from "./SimpleModal";
+import AddPaymentCategoryForm from "./AddPaymentCategoryForm";
 
 
 export default function AddPaymentForm() {
@@ -26,11 +27,12 @@ export default function AddPaymentForm() {
     const [customCategories, setCustomCategories] = useState([])
     const [category, setCategory] = useState('');
     const [amount, setAmount] = useState('');
+    const [categoryAdded, setCategoryAdded] = useState(false);
 
     useEffect(() => {
         getCustomPaymentCategories()
             .then(res => setCustomCategories(res.data));
-    }, []);
+    }, [categoryAdded]);
 
 
     const handleSubmit = () => {
@@ -98,16 +100,11 @@ export default function AddPaymentForm() {
                             required
                         >
                             <MenuItem value={"FOOD"}>Food</MenuItem>
-                            <MenuItem value={"ALCOHOLIC_DRINKS"}>Alcoholic Drinks</MenuItem>
-                            <MenuItem value={"NON_ALCOHOLIC_DRINKS"}>Non alcoholic drinks</MenuItem>
-                            <MenuItem value={"TOBACCO"}>Tobacco</MenuItem>
                             <MenuItem value={"CLOTHING"}>Clothing</MenuItem>
                             <MenuItem value={"TRANSPORTATION"}>Transportation</MenuItem>
                             <MenuItem value={"TOOLS"}>Tools</MenuItem>
-                            <MenuItem value={"PETS"}>Pets</MenuItem>
                             <MenuItem value={"UTILITIES"}>Utilities</MenuItem>
                             <MenuItem value={"INVESTMENTS"}>Investments</MenuItem>
-                            <MenuItem value={"OTHERS"}>Others</MenuItem>
                             {
                                 customCategories && customCategories
                                     .map((c, i) =>
@@ -117,7 +114,23 @@ export default function AddPaymentForm() {
                             }
                         </Select>
                     </FormControl>
-                    <SimpleModal/>
+
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        paddingTop: "1rem"
+                    }}>
+                        <Typography variant="body2">
+                            Can't find the category you're looking for?
+                        </Typography>
+                        <SimpleModal
+                            content={<AddPaymentCategoryForm/>}
+                        />
+                    </div>
+
+
                     <Button
                         fullWidth
                         variant="contained"
