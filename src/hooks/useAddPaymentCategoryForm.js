@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import paymentCategoryValidator from "../util/validation/paymentCategoryValidator";
 import {addPaymentCategory} from "../api/paymentCategories";
 
-const useSignInForm = (from) => {
-    const history = useHistory();
-
+const useSignInForm = () => {
     const [values, setValues] = useState({
         category: ""
     });
